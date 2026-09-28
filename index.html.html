@@ -1,0 +1,527 @@
+<!DOCTYPE html> <!-- Declara para o navegador que este é um documento HTML5 moderno -->
+<html lang="pt-BR" class="dark"> <!-- Define o idioma como Português do Brasil e define o tema escuro como padrão -->
+
+<head> <!-- Cabeçalho técnico do documento com metadados, links e estilos -->
+    <meta charset="UTF-8"> <!-- Garante a exibição correta de caracteres especiais e acentos do português -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Torna a página totalmente responsiva em celulares, tablets e computadores -->
+    <title>Windows OS - O Sistema Operacional Revisitado</title> <!-- Título exibido na aba do navegador -->
+
+    <!-- Carrega o Tailwind CSS via CDN para estilização com classes utilitárias modernas -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Configura o tema customizado inspirado na identidade do Windows para a biblioteca Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Permite alternar o tema via JavaScript adicionando ou removendo a classe 'dark'
+            theme: {
+                extend: {
+                    colors: {
+                        // Cores oficiais da marca Microsoft Windows
+                        win: {
+                            blue: '#0078D4',      // Azul clássico do ecossistema Microsoft
+                            cyan: '#00A4EF',      // Ciano vibrante do logotipo do Windows
+                            darkBg: '#070B14',    // Azul escuro profundo (Night Slate) do Windows 11
+                            cardBg: '#0F172A',    // Fundo dos cartões no modo escuro
+                            acrylic: 'rgba(15, 23, 42, 0.75)' // Efeito de vidro translúcido (Mica / Fluent Design)
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Carrega a biblioteca FontAwesome para os ícones das redes sociais e recursos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Importa a fonte Segoe UI / Inter para combinar com o sistema operacional Windows */
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700;800&family=Inter:wght@300;400;600;700&display=swap');
+
+        /* Configurações fundamentais da página */
+        body {
+            font-family: 'Segoe UI', 'Inter', -apple-system, sans-serif; /* Define a tipografia oficial */
+            transition: background-color 0.4s ease, color 0.4s ease; /* Transição suave na troca de tema */
+            overflow-x: hidden; /* Evita que a página crie rolagens horizontais indesejadas */
+        }
+
+        /* Efeito Mica / Acrylic do Windows 11 (Vidro Fosco Translúcido) */
+        .win-acrylic {
+            backdrop-filter: blur(20px) saturate(180%); /* Desfoca o fundo como vidro jateado */
+            -webkit-backdrop-filter: blur(20px) saturate(180%); /* Compatibilidade com navegadores da Apple */
+        }
+
+        /* Efeito de Gradiente de Onda Neon no Título Central */
+        .win-title-gradient {
+            background: linear-gradient(135deg, #00A4EF 0%, #0078D4 50%, #38BDF8 100%); /* Gradiente dinâmico */
+            background-size: 200% auto; /* Aumenta o tamanho do fundo para permitir o movimento de onda */
+            -webkit-background-clip: text; /* Corta a cor do fundo para ficar exatamente dentro das letras */
+            -webkit-text-fill-color: transparent; /* Deixa o texto transparente para revelar o gradiente */
+            animation: waveGradient 6s ease infinite alternate; /* Aplica a animação de onda contínua */
+        }
+
+        /* Animação que move o gradiente criando o efeito visual de onda luminosa */
+        @keyframes waveGradient {
+            0% { background-position: 0% 50%; } /* Posição inicial da luz */
+            100% { background-position: 100% 50%; } /* Posição final da luz */
+        }
+
+        /* Animação de flutuação suave do logotipo principal do Windows */
+        @keyframes floatEffect {
+            0%, 100% { transform: translateY(0px); } /* Posição normal */
+            50% { transform: translateY(-12px); } /* Eleva a logo 12 pixels para dar sensação de flutuar */
+        }
+
+        .win-float {
+            animation: floatEffect 5s ease-in-out infinite; /* Executa a animação de flutuar sem parar */
+        }
+
+        /* Estilização interativa dos ícones das redes sociais no rodapé */
+        .social-icon {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* Animação suave com mola ao interagir */
+        }
+
+        /* Efeito Hover do Facebook */
+        .social-facebook:hover {
+            color: #1877F2; /* Cor azul oficial do Facebook */
+            transform: translateY(-8px) scale(1.25); /* Eleva o ícone e aumenta seu tamanho */
+            filter: drop-shadow(0 0 14px rgba(24, 119, 242, 0.9)); /* Brilho neon azul ao redor */
+        }
+
+        /* Efeito Hover do TikTok */
+        .social-tiktok:hover {
+            color: #00F2FE; /* Ciano vibrante da identidade do TikTok */
+            transform: translateY(-8px) scale(1.25); /* Eleva o ícone e aumenta seu tamanho */
+            filter: drop-shadow(0 0 14px rgba(0, 242, 254, 0.9)); /* Brilho neon ciano ao redor */
+        }
+
+        /* Efeito Hover do Instagram */
+        .social-instagram:hover {
+            color: #E1306C; /* Cor rosa/magenta oficial do Instagram */
+            transform: translateY(-8px) scale(1.25); /* Eleva o ícone e aumenta seu tamanho */
+            filter: drop-shadow(0 0 14px rgba(225, 48, 108, 0.9)); /* Brilho neon rosa ao redor */
+        }
+    </style> <!-- Fim das regras de estilo CSS -->
+</head> <!-- Fim da seção de cabeçalho da página -->
+
+<body class="bg-win-darkBg text-slate-100 min-h-screen flex flex-col justify-between selection:bg-win-blue selection:text-white"> <!-- Define as cores padrão da aplicação -->
+
+    <!-- Barra de Navegação Superior (Header / Navbar) com Efeito de Vidro Transparente -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-6 border-b border-transparent"> <!-- Barra fixa que se ajusta ao rolar -->
+        <div class="max-w-7xl mx-auto flex items-center justify-between"> <!-- Alinha o conteúdo no centro da tela -->
+            
+            <!-- Logotipo da Marca Windows -->
+            <a href="#" class="flex items-center gap-3 group"> <!-- Link com alinhamento flexível da logo -->
+                <!-- Grade com 4 quadrados simulando a logo oficial do Windows 11 -->
+                <div class="grid grid-cols-2 gap-1 w-7 h-7 group-hover:rotate-180 transition-transform duration-700"> <!-- Roda a logo em 180° no hover -->
+                    <div class="bg-win-cyan rounded-sm"></div> <!-- Quadrado 1 -->
+                    <div class="bg-win-cyan rounded-sm"></div> <!-- Quadrado 2 -->
+                    <div class="bg-win-cyan rounded-sm"></div> <!-- Quadrado 3 -->
+                    <div class="bg-win-cyan rounded-sm"></div> <!-- Quadrado 4 -->
+                </div> <!-- Fim dos quadrados do logotipo -->
+                <span class="font-bold text-xl tracking-tight text-white group-hover:text-win-cyan transition-colors">Windows<span class="font-light opacity-80">OS</span></span> <!-- Nome da marca -->
+            </a> <!-- Fim do logotipo -->
+
+            <!-- Botão Interativo para Alternar entre Tema Claro e Escuro -->
+            <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700/60 transition-all duration-300 flex items-center gap-2 text-sm font-medium"> <!-- Botão para ativar função JS -->
+                <i id="theme-icon" class="fa-solid fa-moon text-win-cyan"></i> <!-- Ícone da lua -->
+                <span id="theme-text" class="hidden sm:inline">Modo Escuro</span> <!-- Texto legível -->
+            </button> <!-- Fim do botão de tema -->
+
+        </div> <!-- Fim da caixa da navbar -->
+    </nav> <!-- Fim da barra de navegação -->
+
+    <!-- Seção Principal Centralizada (Hero Section) -->
+    <header class="relative pt-36 pb-20 px-4 text-center overflow-hidden flex flex-col items-center justify-center min-h-[70vh]"> <!-- Centralização absoluta do conteúdo do topo -->
+        
+        <!-- Luzes Esféricas de Fundo para Criar Atmosfera Neon (Glow Effect) -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36rem] h-[36rem] bg-win-blue/20 rounded-full blur-[140px] -z-10 pointer-events-none"></div> <!-- Luz azul de fundo -->
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-80 h-80 bg-win-cyan/20 rounded-full blur-[100px] -z-10 pointer-events-none"></div> <!-- Luz ciano central -->
+
+        <!-- Elemento Gráfico Central: Logo Grande do Windows 11 com Flutuação -->
+        <div class="win-float mb-8"> <!-- Animação contínua de flutuabilidade -->
+            <div class="grid grid-cols-2 gap-2.5 w-20 h-20 p-2 bg-slate-900/50 rounded-2xl border border-white/10 shadow-2xl backdrop-blur-md"> <!-- Moldura translúcida -->
+                <div class="bg-gradient-to-br from-sky-400 to-win-blue rounded-md shadow-lg shadow-sky-500/20"></div> <!-- Bloco 1 -->
+                <div class="bg-gradient-to-br from-sky-400 to-win-blue rounded-md shadow-lg shadow-sky-500/20"></div> <!-- Bloco 2 -->
+                <div class="bg-gradient-to-br from-sky-400 to-win-blue rounded-md shadow-lg shadow-sky-500/20"></div> <!-- Bloco 3 -->
+                <div class="bg-gradient-to-br from-sky-400 to-win-blue rounded-md shadow-lg shadow-sky-500/20"></div> <!-- Bloco 4 -->
+            </div> <!-- Fim do ícone em destaque -->
+        </div> <!-- Fim do bloco flutuante -->
+
+        <!-- Selo de Autoria da Desenvolvedora no Topo -->
+        <div class="mb-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/90 border border-win-cyan/30 text-win-cyan text-xs sm:text-sm font-semibold tracking-wide shadow-lg backdrop-blur-md">
+            <i class="fa-solid fa-code text-win-cyan"></i>
+            <span>Desenvolvido por <strong class="text-white font-bold underline decoration-win-cyan">Sabrina Reis</strong></span>
+        </div>
+
+        <!-- Título Principal com Efeito de Onda Colorida -->
+        <h1 class="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight win-title-gradient mb-6 max-w-5xl leading-tight"> <!-- Texto responsivo gigante -->
+            Sistema Operacional Windows
+        </h1> <!-- Título centralizado -->
+
+        <!-- Subtítulo Explicativo -->
+        <p class="text-slate-300 dark:text-slate-400 text-lg sm:text-2xl max-w-3xl mx-auto font-normal leading-relaxed mb-10 px-4"> <!-- Parágrafo de apresentação -->
+            O ecossistema digital que impulsiona a produtividade, a segurança de ponta e a inovação tecnológica no mundo inteiro. <!-- Descrição -->
+        </p> <!-- Fim do subtítulo -->
+
+        <!-- Botão de Ação (Call To Action) para Rolar até os Recursos -->
+        <div class="flex flex-wrap items-center justify-center gap-4"> <!-- Centraliza o botão -->
+            <a href="#recursos" class="px-8 py-4 rounded-xl bg-gradient-to-r from-win-blue to-win-cyan text-white font-semibold text-lg shadow-lg shadow-win-blue/30 hover:shadow-win-cyan/50 hover:scale-105 transition-all duration-300 flex items-center gap-3"> <!-- Botão azul com efeito hover -->
+                <span>Conhecer os 12 Recursos</span> <!-- Texto do botão -->
+                <i class="fa-solid fa-arrow-down text-sm animate-bounce"></i> <!-- Ícone de seta com animação para baixo -->
+            </a> <!-- Fim do botão de ação -->
+        </div> <!-- Fim do contêiner do botão -->
+
+    </header> <!-- Fim do Hero -->
+
+    <!-- Seção Principal de Conteúdo: 12 Cards dispostos em Linhas Alternadas -->
+    <main id="recursos" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full flex-grow"> <!-- Limita a largura central -->
+        
+        <!-- Cabeçalho da Seção de Recursos -->
+        <div class="text-center mb-20"> <!-- Espaçamento e alinhamento do título da seção -->
+            <span class="text-win-cyan text-sm font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full bg-win-cyan/10 border border-win-cyan/20">Poder e Versatilidade Sem Limites</span> <!-- Badge da seção -->
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 tracking-tight"> <!-- Título principal do catálogo -->
+                12 Pilares do Ecossistema Windows <!-- Título -->
+            </h2> <!-- Fim do título -->
+            <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mt-3">Explore os recursos fundamentais organizados em um layout moderno de visualização alternada.</p> <!-- Subtítulo explicativo -->
+        </div> <!-- Fim do cabeçalho da seção -->
+
+        <!-- Lista Contendo os 12 Cards em Layouts Alternados (Imagem à esquerda x Imagem à direita) -->
+        <div class="space-y-16"> <!-- Espaçamento vertical entre cada uma das 12 linhas -->
+
+            <!-- CARD 1 (Linha 1: Imagem à Esquerda, Conteúdo à Direita) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 1 -->
+                <div class="lg:col-span-6 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Div restritiva com overflow-hidden para travar o zoom da foto -->
+                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1000&q=80" alt="Fluent Design Windows 11" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=Fluent+Design'"> <!-- Imagem com efeito de zoom no hover -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div> <!-- Camada de sombra na foto -->
+                </div> <!-- Fim da div da imagem -->
+                <div class="lg:col-span-6 flex flex-col justify-center"> <!-- Conteúdo textual da direita -->
+                    <div class="w-12 h-12 rounded-xl bg-win-cyan/20 border border-win-cyan/40 flex items-center justify-center text-win-cyan text-xl mb-4"> <!-- Ícone -->
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <span class="text-win-cyan text-xs font-bold uppercase tracking-wider mb-1">Recurso 01</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">Fluent Design & Visual Moderno</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Uma interface refinada com cantos arredondados, efeitos de acrílico translúcido, menu Iniciar centralizado e animações fluidas projetadas para dar foco total ao usuário.</p> <!-- Descrição -->
+                </div> <!-- Fim do conteúdo textual -->
+            </div> <!-- Fim do Card 1 -->
+
+            <!-- CARD 2 (Linha 2: Conteúdo à Esquerda, Imagem à Direita - Alternado) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 2 -->
+                <div class="lg:col-span-6 order-2 lg:order-1 flex flex-col justify-center"> <!-- Conteúdo textual da esquerda (order-1 em desktop) -->
+                    <div class="w-12 h-12 rounded-xl bg-win-blue/20 border border-win-blue/40 flex items-center justify-center text-win-blue text-xl mb-4"> <!-- Ícone -->
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <span class="text-win-blue text-xs font-bold uppercase tracking-wider mb-1">Recurso 02</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">Performance & Kernel de Alta Velocidade</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Gerenciamento dinâmico de recursos de hardware com alocação otimizada de CPU e memória RAM para inicializações velozes e resposta instantânea dos programas.</p> <!-- Descrição -->
+                </div> <!-- Fim do texto -->
+                <div class="lg:col-span-6 order-1 lg:order-2 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Imagem da direita (order-2 em desktop) -->
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1000&q=80" alt="Processador de Alta Performance" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=Performance+Windows'"> <!-- Imagem com efeito de zoom 110% -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div> <!-- Sombra visual -->
+                </div> <!-- Fim da div da imagem -->
+            </div> <!-- Fim do Card 2 -->
+
+            <!-- CARD 3 (Linha 3: Imagem à Esquerda, Conteúdo à Direita) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 3 -->
+                <div class="lg:col-span-6 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Imagem da esquerda -->
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80" alt="Inteligência Artificial Copilot" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=Copilot+AI'"> <!-- Zoom na imagem de IA -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                </div> <!-- Fim da imagem -->
+                <div class="lg:col-span-6 flex flex-col justify-center"> <!-- Texto da direita -->
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400 text-xl mb-4"> <!-- Ícone roxo -->
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <span class="text-purple-400 text-xs font-bold uppercase tracking-wider mb-1">Recurso 03</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">Copilot AI & Assistência Inteligente</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Inteligência Artificial integrada diretamente ao sistema operacional para automatizar tarefas diárias, gerar conteúdos, resumir textos e ajustar configurações com linguagem natural.</p> <!-- Descrição -->
+                </div> <!-- Fim do texto -->
+            </div> <!-- Fim do Card 3 -->
+
+            <!-- CARD 4 (Linha 4: Conteúdo à Esquerda, Imagem à Direita - Alternado) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 4 -->
+                <div class="lg:col-span-6 order-2 lg:order-1 flex flex-col justify-center"> <!-- Texto da esquerda -->
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-xl mb-4"> <!-- Ícone verde -->
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <span class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1">Recurso 04</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">Segurança Avançada com Windows Defender</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Proteção contínua em tempo real contra invasões e malwares, com autenticação biométrica pelo Windows Hello e isolamento seguro de dados sensíveis.</p> <!-- Descrição -->
+                </div> <!-- Fim do texto -->
+                <div class="lg:col-span-6 order-1 lg:order-2 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Imagem da direita -->
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1000&q=80" alt="Segurança Digital Defender" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=Windows+Defender'"> <!-- Zoom na imagem de segurança -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                </div> <!-- Fim da imagem -->
+            </div> <!-- Fim do Card 4 -->
+
+            <!-- CARD 5 (Linha 5: Imagem à Esquerda, Conteúdo à Direita) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 5 -->
+                <div class="lg:col-span-6 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Imagem da esquerda -->
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80" alt="Multitarefa e Snap Layouts" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=Snap+Layouts'"> <!-- Zoom da imagem de multitarefa -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                </div> <!-- Fim da imagem -->
+                <div class="lg:col-span-6 flex flex-col justify-center"> <!-- Texto da direita -->
+                    <div class="w-12 h-12 rounded-xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-sky-400 text-xl mb-4"> <!-- Ícone -->
+                        <i class="fa-solid fa-border-all"></i>
+                    </div>
+                    <span class="text-sky-400 text-xs font-bold uppercase tracking-wider mb-1">Recurso 05</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">Snap Layouts & Organização de Telas</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Agrupe janelas e aplicativos em grades perfeitas com um simples clique para maximizar sua produtividade em qualquer monitor.</p> <!-- Descrição -->
+                </div> <!-- Fim do texto -->
+            </div> <!-- Fim do Card 5 -->
+
+            <!-- CARD 6 (Linha 6: Conteúdo à Esquerda, Imagem à Direita - Alternado) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 6 -->
+                <div class="lg:col-span-6 order-2 lg:order-1 flex flex-col justify-center"> <!-- Texto da esquerda -->
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 text-xl mb-4"> <!-- Ícone -->
+                        <i class="fa-solid fa-terminal"></i>
+                    </div>
+                    <span class="text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">Recurso 06</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">Windows Terminal & Subsystem for Linux (WSL2)</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Ambiente definitivo para desenvolvedores, permitindo rodar distribuições nativas de Linux diretamente no Windows sem a necessidade de máquinas virtuais pesadas.</p> <!-- Descrição -->
+                </div> <!-- Fim do texto -->
+                <div class="lg:col-span-6 order-1 lg:order-2 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Imagem da direita -->
+                    <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=1000&q=80" alt="Programação no Windows Terminal" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=Windows+Terminal'"> <!-- Zoom da imagem de código -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                </div> <!-- Fim da imagem -->
+            </div> <!-- Fim do Card 6 -->
+
+            <!-- CARD 7 (Linha 7: Imagem à Esquerda, Conteúdo à Direita) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 7 -->
+                <div class="lg:col-span-6 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Imagem da esquerda -->
+                    <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=1000&q=80" alt="Áreas de Trabalho Virtuais" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=Virtual+Desktops'"> <!-- Zoom da imagem de notebook -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                </div> <!-- Fim da imagem -->
+                <div class="lg:col-span-6 flex flex-col justify-center"> <!-- Texto da direita -->
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 text-xl mb-4"> <!-- Ícone -->
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <span class="text-indigo-400 text-xs font-bold uppercase tracking-wider mb-1">Recurso 07</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">Áreas de Trabalho Virtuais Personalizadas</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Crie diferentes ambientes digitais separados para trabalho, estudos e entretenimento, trocando de área de trabalho com facilidade através de atalhos rápidos.</p> <!-- Descrição -->
+                </div> <!-- Fim do texto -->
+            </div> <!-- Fim do Card 7 -->
+
+            <!-- CARD 8 (Linha 8: Conteúdo à Esquerda, Imagem à Direita - Alternado) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 8 -->
+                <div class="lg:col-span-6 order-2 lg:order-1 flex flex-col justify-center"> <!-- Texto da esquerda -->
+                    <div class="w-12 h-12 rounded-xl bg-green-500/20 border border-green-500/40 flex items-center justify-center text-green-400 text-xl mb-4"> <!-- Ícone verde de Xbox -->
+                        <i class="fa-brands fa-xbox"></i>
+                    </div>
+                    <span class="text-green-400 text-xs font-bold uppercase tracking-wider mb-1">Recurso 08</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">Xbox Cloud Gaming & Ecossistema de Jogos</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Acesse instantaneamente centenas de jogos no computador em alta qualidade através do catálogo do Xbox Game Pass e da tecnologia de transmissão na nuvem.</p> <!-- Descrição -->
+                </div> <!-- Fim do texto -->
+                <div class="lg:col-span-6 order-1 lg:order-2 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Imagem da direita -->
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80" alt="Xbox Cloud Gaming no Windows" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=Xbox+Gaming'"> <!-- Zoom da imagem de games -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                </div> <!-- Fim da imagem -->
+            </div> <!-- Fim do Card 8 -->
+
+            <!-- CARD 9 (Linha 9: Imagem à Esquerda, Conteúdo à Direita) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 9 -->
+                <div class="lg:col-span-6 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Imagem da esquerda -->
+                    <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=1000&q=80" alt="DirectX 12 e Auto HDR" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=DirectX+12'"> <!-- Zoom da imagem de tecnologia gráfica -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                </div> <!-- Fim da imagem -->
+                <div class="lg:col-span-6 flex flex-col justify-center"> <!-- Texto da direita -->
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 text-xl mb-4"> <!-- Ícone -->
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <span class="text-rose-400 text-xs font-bold uppercase tracking-wider mb-1">Recurso 09</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">DirectX 12 Ultimate & Auto HDR</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Taxas de quadros ultra-elevadas, Ray Tracing em tempo real e melhoria gráfica automática para imagens vibrantes e realistas nos jogos mais modernos.</p> <!-- Descrição -->
+                </div> <!-- Fim do texto -->
+            </div> <!-- Fim do Card 9 -->
+
+            <!-- CARD 10 (Linha 10: Conteúdo à Esquerda, Imagem à Direita - Alternado) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 10 -->
+                <div class="lg:col-span-6 order-2 lg:order-1 flex flex-col justify-center"> <!-- Texto da esquerda -->
+                    <div class="w-12 h-12 rounded-xl bg-teal-500/20 border border-teal-500/40 flex items-center justify-center text-teal-400 text-xl mb-4"> <!-- Ícone -->
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <span class="text-teal-400 text-xs font-bold uppercase tracking-wider mb-1">Recurso 10</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">Suporte Avançado a Telas de Toque e Caneta Digital</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Experiência tátil natural com gestos intuitivos e sensibilidade à pressão para desenhar, anotar documentos e assinar arquivos em aparelhos 2 em 1.</p> <!-- Descrição -->
+                </div> <!-- Fim do texto -->
+                <div class="lg:col-span-6 order-1 lg:order-2 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Imagem da direita -->
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1000&q=80" alt="Toque e Caneta Digital no Windows" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=Touch+and+Pen'"> <!-- Zoom da foto tátil -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                </div> <!-- Fim da imagem -->
+            </div> <!-- Fim do Card 10 -->
+
+            <!-- CARD 11 (Linha 11: Imagem à Esquerda, Conteúdo à Direita) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 11 -->
+                <div class="lg:col-span-6 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Imagem da esquerda -->
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1000&q=80" alt="Windows Store e Apps Android" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=Microsoft+Store'"> <!-- Zoom da imagem de loja e aplicativos -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                </div> <!-- Fim da imagem -->
+                <div class="lg:col-span-6 flex flex-col justify-center"> <!-- Texto da direita -->
+                    <div class="w-12 h-12 rounded-xl bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-orange-400 text-xl mb-4"> <!-- Ícone -->
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <span class="text-orange-400 text-xs font-bold uppercase tracking-wider mb-1">Recurso 11</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">Microsoft Store & Aplicativos Android</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Loja unificada totalmente reformulada com suporte nativo a softwares clássicos Win32 e integração para rodar aplicativos mobile de Android.</p> <!-- Descrição -->
+                </div> <!-- Fim do texto -->
+            </div> <!-- Fim do Card 11 -->
+
+            <!-- CARD 12 (Linha 12: Conteúdo à Esquerda, Imagem à Direita - Alternado) -->
+            <div class="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-md hover:border-win-cyan/50 transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-win-cyan/10"> <!-- Container do Card 12 -->
+                <div class="lg:col-span-6 order-2 lg:order-1 flex flex-col justify-center"> <!-- Texto da esquerda -->
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-400 text-xl mb-4"> <!-- Ícone da Nuvem Azure -->
+                        <i class="fa-solid fa-cloud"></i>
+                    </div>
+                    <span class="text-blue-400 text-xs font-bold uppercase tracking-wider mb-1">Recurso 12</span>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-white mb-3 group-hover:text-win-cyan transition-colors">Integração Nativa com a Nuvem Microsoft Azure & OneDrive</h3> <!-- Título -->
+                    <p class="text-slate-300 text-base leading-relaxed">Sincronização instantânea de documentos e fotos na nuvem com backups automáticos e acesso direto aos seus arquivos em qualquer dispositivo conectado.</p> <!-- Descrição -->
+                </div> <!-- Fim do texto -->
+                <div class="lg:col-span-6 order-1 lg:order-2 h-72 sm:h-80 rounded-2xl overflow-hidden relative"> <!-- Imagem da direita -->
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1000&q=80" alt="Computação em Nuvem Azure" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" onerror="this.src='https://placehold.co/800x600/0f172a/ffffff?text=Azure+Cloud'"> <!-- Zoom da imagem de computação na nuvem -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                </div> <!-- Fim da imagem -->
+            </div> <!-- Fim do Card 12 -->
+
+        </div> <!-- Fim das 12 linhas do grid alternado -->
+    </main> <!-- Fim do conteúdo de dados -->
+
+    <!-- Rodapé Interativo da Página (Footer) com Ícones Sociais com Efeito Glow Neon -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 py-12 px-4 text-center relative z-20 backdrop-blur-md mt-16"> <!-- Rodapé com borda e desfoque de vidro -->
+        <div class="max-w-7xl mx-auto flex flex-col items-center justify-between gap-8 md:flex-row"> <!-- Layout responsivo do rodapé -->
+            
+            <!-- Mensagem de Direitos Autorais e Nome do Sistema -->
+            <div class="text-left flex flex-col items-center md:items-start gap-1"> <!-- Alinhamento para telas grandes -->
+                <div class="flex items-center gap-2"> <!-- Ícone da marca Microsoft -->
+                    <div class="grid grid-cols-2 gap-0.5 w-4 h-4"> <!-- 4 mini quadrados -->
+                        <div class="bg-win-cyan rounded-[1px]"></div>
+                        <div class="bg-win-cyan rounded-[1px]"></div>
+                        <div class="bg-win-cyan rounded-[1px]"></div>
+                        <div class="bg-win-cyan rounded-[1px]"></div>
+                    </div> <!-- Fim da logo -->
+                    <span class="font-bold text-white text-base">Microsoft Windows OS</span> <!-- Nome do produto -->
+                </div> <!-- Fim do ícone -->
+                <p class="text-slate-500 text-xs mt-1">&copy; <span id="current-year"></span> Microsoft Corporation. Todos os direitos reservados.</p> <!-- Direitos autorais com ano automático -->
+            </div> <!-- Fim da marca -->
+
+            <!-- Seção Centralizada de Crédito do Desenvolvedor e Redes Sociais -->
+            <div class="flex flex-col items-center gap-6"> <!-- Container central do rodapé -->
+                
+                <!-- Badge Elegante Neon em Destaque: Créditos de Desenvolvimento por Sabrina Reis -->
+                <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-win-blue/20 via-win-cyan/10 to-purple-500/20 border border-win-cyan/40 shadow-lg shadow-win-cyan/10 hover:shadow-win-cyan/30 hover:border-win-cyan transition-all duration-300 group"> <!-- Badge translúcido com brilho neon -->
+                    <i class="fa-solid fa-code text-win-cyan text-sm group-hover:rotate-12 transition-transform"></i> <!-- Ícone de código -->
+                    <span class="text-slate-200 text-sm font-semibold tracking-wide">
+                        Desenvolvido com dedicação por <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-win-cyan font-extrabold group-hover:underline">Sabrina Reis</span> <!-- Nome com gradiente vibrante -->
+                    </span> <!-- Texto de autoria -->
+                    <i class="fa-solid fa-heart text-rose-500 text-xs animate-pulse"></i> <!-- Ícone de coração pulsante -->
+                </div> <!-- Fim do badge de autoria -->
+
+                <!-- Ícones das Redes Sociais com Efeitos de Luz Neon (Facebook, TikTok, Instagram) -->
+                <div class="flex items-center space-x-10 text-3xl"> <!-- Espaçamento entre os ícones -->
+                    
+                    <!-- Ícone do Facebook -->
+                    <a href="#" aria-label="Acessar Facebook da Microsoft" class="social-icon social-facebook text-slate-400" onclick="handleSocialClick(event, 'Facebook')"> <!-- Dispara função em JS -->
+                        <i class="fa-brands fa-facebook"></i> <!-- Ícone do Facebook -->
+                    </a> <!-- Fim do botão Facebook -->
+
+                    <!-- Ícone do TikTok -->
+                    <a href="#" aria-label="Acessar TikTok da Microsoft" class="social-icon social-tiktok text-slate-400" onclick="handleSocialClick(event, 'TikTok')"> <!-- Dispara função em JS -->
+                        <i class="fa-brands fa-tiktok"></i> <!-- Ícone do TikTok -->
+                    </a> <!-- Fim do botão TikTok -->
+
+                    <!-- Ícone do Instagram -->
+                    <a href="#" aria-label="Acessar Instagram da Microsoft" class="social-icon social-instagram text-slate-400" onclick="handleSocialClick(event, 'Instagram')"> <!-- Dispara função em JS -->
+                        <i class="fa-brands fa-instagram"></i> <!-- Ícone do Instagram -->
+                    </a> <!-- Fim do botão Instagram -->
+
+                </div> <!-- Fim dos botões sociais -->
+
+            </div> <!-- Fim da seção central -->
+
+        </div> <!-- Fim da estrutura interna do rodapé -->
+    </footer> <!-- Fim do rodapé -->
+
+    <!-- Notificação Estilo Windows Toast (Aviso de interação) -->
+    <div id="toast-notification" class="fixed bottom-6 right-6 bg-slate-900/95 text-white border border-win-cyan/40 px-6 py-4 rounded-xl shadow-2xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-4 z-50 transform translate-y-6 backdrop-blur-lg"> <!-- Elemento flutuante no canto inferior direito -->
+        <div class="w-10 h-10 rounded-lg bg-win-cyan/20 flex items-center justify-center text-win-cyan text-lg"> <!-- Caixa do ícone -->
+            <i class="fa-solid fa-bell animate-bounce"></i> <!-- Ícone com pulso -->
+        </div> <!-- Fim da caixa do ícone -->
+        <div> <!-- Texto do aviso -->
+            <h4 class="text-xs font-bold text-win-cyan uppercase tracking-wider">Notificação Windows</h4> <!-- Título da caixa -->
+            <p id="toast-message" class="text-sm font-medium text-slate-200">Carregando canal oficial...</p> <!-- Mensagem alterada via JavaScript -->
+        </div> <!-- Fim do texto -->
+    </div> <!-- Fim da notificação toast -->
+
+    <!-- Lógica em JavaScript com Comentários para Leigos em Programação -->
+    <script>
+        // Aguarda todo o documento HTML carregar antes de rodar os scripts
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // 1. ATUALIZAÇÃO DO ANO AUTOMÁTICO NO RODAPÉ
+            const currentYearSpan = document.getElementById('current-year'); // Localiza o elemento com a id 'current-year'
+            if (currentYearSpan) { // Se o elemento existir
+                currentYearSpan.textContent = new Date().getFullYear(); // Coloca o ano atual no texto (ex: 2026)
+            }
+
+            // 2. ALTERNADOR DE MODO ESCURO E CLARO
+            const themeToggleBtn = document.getElementById('theme-toggle'); // Procura o botão de alterar tema
+            const themeIcon = document.getElementById('theme-icon'); // Procura o ícone dentro do botão
+            const themeText = document.getElementById('theme-text'); // Procura o texto dentro do botão
+            const htmlElement = document.documentElement; // Seleciona a tag principal do documento <html>
+
+            // Quando o usuário clica no botão de tema
+            themeToggleBtn.addEventListener('click', function () {
+                if (htmlElement.classList.contains('dark')) { // Se a página está no modo escuro
+                    htmlElement.classList.remove('dark'); // Remove a classe escuro
+                    htmlElement.classList.add('light'); // Adiciona a classe claro
+                    themeIcon.className = 'fa-solid fa-sun text-amber-400'; // Troca a lua pelo sol
+                    themeText.textContent = 'Modo Claro'; // Altera o texto para 'Modo Claro'
+                    document.body.classList.remove('bg-win-darkBg', 'text-slate-100'); // Remove o fundo escuro
+                    document.body.classList.add('bg-slate-100', 'text-slate-900'); // Ativa o fundo claro
+                } else { // Se a página está no modo claro
+                    htmlElement.classList.remove('light'); // Remove o claro
+                    htmlElement.classList.add('dark'); // Reativa o escuro
+                    themeIcon.className = 'fa-solid fa-moon text-win-cyan'; // Volta o ícone para a lua
+                    themeText.textContent = 'Modo Escuro'; // Volta o texto para 'Modo Escuro'
+                    document.body.classList.remove('bg-slate-100', 'text-slate-900'); // Remove o fundo claro
+                    document.body.classList.add('bg-win-darkBg', 'text-slate-100'); // Reativa o fundo escuro do Windows
+                }
+            });
+
+            // 3. BARRA DE NAVEGAÇÃO COM EFEITO DE TRANSPARÊNCIA E ROLAGEM (SCROLL)
+            const navbar = document.getElementById('navbar'); // Procura a barra de navegação no topo
+
+            // Escuta a rolagem do mouse na tela
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 40) { // Se o usuário rolou a tela mais de 40 pixels para baixo
+                    navbar.classList.add('bg-slate-950/80', 'win-acrylic', 'border-slate-800/80', 'shadow-2xl'); // Ativa o efeito de vidro
+                    navbar.classList.remove('border-transparent'); // Remove a borda transparente
+                } else { // Se o usuário voltou para o topo absoluto da página
+                    navbar.classList.remove('bg-slate-950/80', 'win-acrylic', 'border-slate-800/80', 'shadow-2xl'); // Devolve o fundo limpo
+                    navbar.classList.add('border-transparent'); // Restaura a borda transparente
+                }
+            });
+        });
+
+        // 4. MENSAGEM INTERATIVA (TOAST) PARA AS REDES SOCIAIS
+        function handleSocialClick(event, platformName) {
+            event.preventDefault(); // Impede o link de pular para o topo da tela
+
+            const toast = document.getElementById('toast-notification'); // Seleciona a caixa de aviso
+            const toastMessage = document.getElementById('toast-message'); // Seleciona a mensagem interna
+
+            // Altera o texto exibido na caixa
+            toastMessage.textContent = `Redirecionando para o perfil oficial do Windows no ${platformName}...`;
+
+            // Mostra a notificação na tela com animação
+            toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-6');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            // Esconde o aviso sozinho após 3.5 segundos (3500 milissegundos)
+            setTimeout(function () {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-6');
+            }, 3500);
+        }
+    </script> <!-- Fim das funções JavaScript -->
+
+</body> <!-- Fim do corpo do documento -->
+
+</html> <!-- Fim do arquivo HTML -->
